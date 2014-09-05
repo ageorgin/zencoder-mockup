@@ -1,0 +1,72 @@
+<h2 class="sub-header">
+    Job id : {{job._id}}
+    <span ng-switch on="job.status">
+        <span ng-switch-when="PROCESS">
+            <span class="label label-primary">Processing</span>
+        </span>
+        <span ng-switch-when="FINISH">
+            <span class="label label-success">Finished</span>
+        </span>
+        <span ng-switch-when="FAIL">
+            <span class="label label-danger">Failed</span>
+        </span>
+        <span ng-switch-when="CANCEL">
+            <span class="label label-danger">Canceled</span>
+        </span>
+        <span ng-switch-default>
+        </span>
+    </span>
+</h2>
+
+<div class="alert alert-danger" ng-show="msgAlert">{{msgAlert}}</div>
+
+<div class="panel panel-primary">
+    <div class="panel-heading">Input</div>
+    <div class="panel-body">
+        <div>
+            <label>url : </label> <span>{{job.input}}</span>
+        </div>
+        <div>
+            <label>submitted at : </label> <span>{{job.submitted_at}}</span>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-4" ng-repeat="output in job.output">
+        <div class="panel panel-info">
+            <div class="panel-heading">Output</div>
+            <div class="panel-body"  style="height:180px">
+                <div><label>url : </label> <span>{{output.url}}</span></div>
+                <div>
+                    <label>status : </label>
+                    <span ng-switch on="output.status">
+                        <span ng-switch-when="PROCESS">
+                            <span class="label label-primary">Processing</span>
+                        </span>
+                        <span ng-switch-when="FINISH">
+                            <span class="label label-success">Finished</span>
+                        </span>
+                        <span ng-switch-when="FAIL">
+                            <span class="label label-danger">Failed</span>
+                        </span>
+                        <span ng-switch-when="CANCEL">
+                            <span class="label label-danger">Canceled</span>
+                        </span>
+                        <span ng-switch-default>
+                        </span>
+                    </span>
+                </div>
+                <div ng-if="(output.status == 'PROCESS')">
+                    <button type="button" class="btn btn-danger" ng-click="notifyOutput(job._id, output.filename)">Notify output</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div ng-if="(job.status == 'PROCESS')">
+    <button type="button" class="btn btn-danger" ng-click="notifyJob(job._id)">Notify job</button>
+</div>
+
+
