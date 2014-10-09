@@ -15,8 +15,8 @@ angular.module('myApp.job.detailController', [])
                 });
         }
 
-        $scope.notifyOutput = function(jobId, filename) {
-            JobService.notifyOutput(jobId, filename)
+        $scope.notifyOutput = function(jobId, filename, jobStatus, outputStatus) {
+            JobService.notifyOutput(jobId, filename, jobStatus, outputStatus)
                 .success(function(response) {
                     $scope.loadJob($routeParams.id);
                 })

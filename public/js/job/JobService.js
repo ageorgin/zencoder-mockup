@@ -15,8 +15,8 @@ angular.module('myApp.job.service', [])
                 return splitPath[splitPath.length - 1];
 
             },
-            notifyOutput: function(jobId, filename) {
-                return $http.post('/api/v2/notify', {'jobId': jobId, 'filename': filename});
+            notifyOutput: function(jobId, filename, jobStatus, outputStatus) {
+                return $http.post('/api/v2/notify', {'jobId': jobId, 'filename': filename, 'jobStatus': jobStatus, 'outputStatus': outputStatus});
             },
             notifyJob: function(jobId) {
                 return $http.post('/api/v2/notify', {'jobId': jobId, 'filename': null});

@@ -16,6 +16,12 @@
         <span ng-switch-default>
         </span>
     </span>
+    <select name="job_status" ng-model="job.status">
+        <option value="PROCESS">Processing</option>
+        <option value="FINISH">Finished</option>
+        <option value="FAIL">Failed</option>
+        <option value="CANCEL">Cancelled</option>
+    </select>
 </h2>
 
 <div class="alert alert-danger" ng-show="msgAlert">{{msgAlert}}</div>
@@ -56,10 +62,14 @@
                         <span ng-switch-default>
                         </span>
                     </span>
+                    <select ng-model="output.status">
+                        <option value="PROCESS">Processing</option>
+                        <option value="FINISH">Finished</option>
+                        <option value="FAIL">Failed</option>
+                        <option value="CANCEL">Cancelled</option>
+                    </select>
                 </div>
-                <div ng-if="(output.status == 'PROCESS')">
-                    <button type="button" class="btn btn-danger" ng-click="notifyOutput(job._id, output.filename)">Notify output</button>
-                </div>
+                <button type="button" class="btn btn-danger" ng-click="notifyOutput(job._id, output.filename, job.status, output.status)">Notify output</button>
             </div>
         </div>
     </div>

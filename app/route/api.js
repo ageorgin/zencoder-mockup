@@ -55,9 +55,48 @@ router.get('/test', function(req, res){
             if(null == req.body.filename) {
                 res.send('notify all job');
             } else {
+                var jobStatus = '';
+                var outputStatus = '';
+
+                switch(req.body.jobStatus) {
+                    case 'PROCESS':
+                        jobStatus = 'processing';
+                        break;
+
+                    case 'FINISH':
+                        jobStatus = 'finished';
+                        break;
+
+                    case 'CANCEL':
+                        jobStatus = 'cancelled';
+                        break;
+
+                    default:
+                        jobStatus = 'failed';
+                        break;
+                }
+
+                switch(req.body.outputStatus) {
+                    case 'PROCESS':
+                        outputStatus = 'processing';
+                        break;
+
+                    case 'FINISH':
+                        outputStatus = 'finished';
+                        break;
+
+                    case 'CANCEL':
+                        outputStatus = 'cancelled';
+                        break;
+
+                    default:
+                        outputStatus = 'failed';
+                        break;
+                }
+
                 for(var i=0; i < result.output.length; i++) {
                     if( result.output[i].filename == req.body.filename ) {
-                        var postData = new ZencoderNotify(result._id, 'processing', result.submitted_at, result.output[i]._id, result.output[i].url, 'finished');
+                        var postData = new ZencoderNotify(result._id, jobStatus, result.submitted_at, result.output[i]._id, result.output[i].url, outputStatus);
 
                         request.post({
                             headers: {'content-type' : 'application/x-www-form-urlencoded'},
@@ -65,12 +104,14 @@ router.get('/test', function(req, res){
                             body:    JSON.stringify(postData)
                         }, function(error, response, body){
                             if( 200 == response.statusCode ) {
-                                result.output[i].status = 'FINISH';
+                                result.status = req.body.jobStatus;
+                                result.output[i].status = req.body.outputStatus;
                                 result.save(function(err, result){
                                     if(err) {
                                         res.json({message: 'error ' + err});
                                     } else {
-                                        res.json('ok');
+                                        res.json(result);
+                                        //res.json('ok');
                                     }
                                 });
                             } else {
