@@ -16,9 +16,11 @@ angular.module('myApp.job.detailController', [])
         }
 
         $scope.notifyOutput = function(jobId, filename, jobStatus, outputStatus) {
+            clearMessages();
             JobService.notifyOutput(jobId, filename, jobStatus, outputStatus)
                 .success(function(response) {
                     $scope.loadJob($routeParams.id);
+                    $scope.msgSuccess = 'Fichier notifié avec succès';
                 })
                 .error(function() {
                     $scope.msgAlert = 'Erreur lors de la notification';
@@ -27,6 +29,11 @@ angular.module('myApp.job.detailController', [])
 
         $scope.notifyJob = function(jobId) {
             JobService.notifyJob(jobId);
+        }
+
+        function clearMessages() {
+            $scope.msgSuccess = '';
+            $scope.msgAlert = '';
         }
 
         $scope.loadJob($routeParams.id);

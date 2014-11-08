@@ -5,59 +5,61 @@
 <div class="table-responsive">
     <table class="table table-striped">
         <thead>
-        <tr>
-            <th>#</th>
-            <th>Input File</th>
-            <th>Outputs</th>
-            <th>Submitted At</th>
-            <th>Status</th>
-        </tr>
+            <tr>
+                <th>#</th>
+                <th>Input File</th>
+                <th>Outputs</th>
+                <th>Submitted At</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="job in listJob">
-            <td><a href="/#/job/{{job._id}}">{{job._id}}</a></td>
-            <td>{{getFilename(job.input)}}</td>
-            <td>
-                <div ng-repeat="output in job.output">
-                    {{output.filename}}
-                    <span ng-switch on="output.status">
-                        <span ng-switch-when="PROCESS">
+            <tr ng-repeat="job in listJob">
+                <td><a href="/#/job/{{job._id}}">{{job._id}}</a></td>
+                <td>{{getFilename(job.input)}}</td>
+                <td>
+                    <div ng-repeat="output in job.output">
+                        {{output.filename}}
+                        <span ng-switch on="output.status">
+                            <span ng-switch-when="PROCESS">
+                                <span class="label label-primary">Processing</span>
+                            </span>
+                            <span ng-switch-when="FINISH">
+                                <span class="label label-success">Finished</span>
+                            </span>
+                            <span ng-switch-when="FAIL">
+                                <span class="label label-danger">Failed</span>
+                            </span>
+                            <span ng-switch-when="CANCEL">
+                                <span class="label label-danger">Canceled</span>
+                            </span>
+                            <span ng-switch-default>
+                            </span>
+                        </span>
+                    </div>
+                </td>
+                <td>{{job.submitted_at}}</td>
+                <td>
+                    <div ng-switch on="job.status">
+                        <div ng-switch-when="PROCESS">
                             <span class="label label-primary">Processing</span>
-                        </span>
-                        <span ng-switch-when="FINISH">
+                        </div>
+                        <div ng-switch-when="FINISH">
                             <span class="label label-success">Finished</span>
-                        </span>
-                        <span ng-switch-when="FAIL">
+                        </div>
+                        <div ng-switch-when="FAIL">
                             <span class="label label-danger">Failed</span>
-                        </span>
-                        <span ng-switch-when="CANCEL">
+                        </div>
+                        <div ng-switch-when="CANCEL">
                             <span class="label label-danger">Canceled</span>
-                        </span>
-                        <span ng-switch-default>
-                        </span>
-                    </span>
-                </div>
-            </td>
-            <td>{{job.submitted_at}}</td>
-            <td>
-                <div ng-switch on="job.status">
-                    <div ng-switch-when="PROCESS">
-                        <span class="label label-primary">Processing</span>
+                        </div>
+                        <div ng-switch-default>
+                        </div>
                     </div>
-                    <div ng-switch-when="FINISH">
-                        <span class="label label-success">Finished</span>
-                    </div>
-                    <div ng-switch-when="FAIL">
-                        <span class="label label-danger">Failed</span>
-                    </div>
-                    <div ng-switch-when="CANCEL">
-                        <span class="label label-danger">Canceled</span>
-                    </div>
-                    <div ng-switch-default>
-                    </div>
-                </div>
-            </td>
-        </tr>
+                </td>
+                <td><button class="btn btn-danger btn-sm" ng-click="deleteJob(job._id)">Delete</button></td>
+            </tr>
         </tbody>
     </table>
 </div>
