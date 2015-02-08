@@ -24,6 +24,7 @@
     </select>
 </h2>
 
+<div class="alert alert-success" ng-show="msgSuccess">{{msgSuccess}}</div>
 <div class="alert alert-danger" ng-show="msgAlert">{{msgAlert}}</div>
 
 <div class="panel panel-primary">
@@ -59,8 +60,7 @@
                         <span ng-switch-when="CANCEL">
                             <span class="label label-danger">Canceled</span>
                         </span>
-                        <span ng-switch-default>
-                        </span>
+                        <span ng-switch-default></span>
                     </span>
                     <select ng-model="output.status">
                         <option value="PROCESS">Processing</option>
@@ -69,6 +69,7 @@
                         <option value="CANCEL">Cancelled</option>
                     </select>
                 </div>
+                <br/>
                 <button type="button" class="btn btn-danger" ng-click="notifyOutput(job._id, output.filename, job.status, output.status)">Notify output</button>
             </div>
         </div>

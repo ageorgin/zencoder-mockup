@@ -47,6 +47,22 @@ router.get('/test', function(req, res){
             res.json(result);
         }
     });
+}).delete('/jobs', function() {
+    Job.remove({}, function(err) {
+        if (err) {
+            res.json({message: 'error ' + err});
+        } else {
+            res.status(201).send('OK');
+        }
+    });
+}).delete('/jobs/:job_id', function(req, res) {
+    Job.remove({_id: req.params.job_id}, function(err) {
+        if (err) {
+            res.json({message: 'error ' + err});
+        } else {
+            res.status(201).send('OK');
+        }
+    });
 }).post('/notify', function(req, res){
     Job.findOne({_id: req.body.jobId}, function(err, result){
         if(null == result) {

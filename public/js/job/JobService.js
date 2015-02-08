@@ -20,6 +20,9 @@ angular.module('myApp.job.service', [])
             },
             notifyJob: function(jobId) {
                 return $http.post('/api/v2/notify', {'jobId': jobId, 'filename': null});
+            },
+            deleteJob: function(jobId) {
+                return $http.delete('/api/v2/jobs/' + jobId);
             }
         };
     }]);
